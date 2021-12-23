@@ -2,6 +2,7 @@ package com.example.demo.web;
 
 import com.example.demo.service.PersonService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,10 @@ public class HomeController {
     }
 
     @PostMapping("/create")
-    public String createPerson(@RequestParam String username, @RequestParam String password) {
+    public String createPerson(@RequestParam String username, @RequestParam String password, Model model) {
         personService.createPerson(username, password);
-        return "redirect:/home";
+
+        model.addAttribute("users", personService.listAllUsers());
+        return "listAllUsers";
     }
 }
